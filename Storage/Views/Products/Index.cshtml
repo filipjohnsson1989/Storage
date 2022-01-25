@@ -9,6 +9,19 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form asp-action="Filter">
+    <div class="row align-items-center   justify-content-center justify-content-sm-start">
+        <div class="col-auto">
+            <label for="catagoryFilter" class="col-form-label">Filter</label>
+        </div>
+        <div class="col-auto">
+            <input id="catagoryFilter" name="catagory"  value="@ViewBag.Catagory" type="text" class="form-control" required placeholder="Sök på Catagory" />
+        </div>
+        <div class="d-grid col-sm-auto">
+                <button type="submit" class="btn btn-outline-primary">Sök</button>
+        </div>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -37,35 +50,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Orderdate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Shelf)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Count)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Orderdate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Shelf)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -152,10 +152,9 @@ namespace Storage.Controllers
             return _context.Product.Any(e => e.Id == id);
         }
 
-
         public async Task<IActionResult> Inventory()
         {
-            var producGroups = _context.Product.GroupBy(g => new { g.Name,g.Price })
+            var producGroups = _context.Product.GroupBy(g => new { g.Name, g.Price })
                 .Select(g => new { g.Key, SUM = g.Sum(s => s.Count) });
 
 
@@ -169,6 +168,13 @@ namespace Storage.Controllers
                     Count = product.Count,
                     InventoryValue = producGroup.SUM,
                 }).ToListAsync());
+        }
+
+        public async Task<IActionResult> Filter(string catagory)
+        {
+            //ViewData["Catagory"] = catagory;
+            ViewBag.Catagory = catagory;
+            return View(nameof(Index), await _context.Product.Where(p => p.Category.ToLower().Contains(catagory.ToLower())).ToListAsync());
         }
     }
 }
