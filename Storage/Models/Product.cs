@@ -14,8 +14,10 @@ public class Product
     
     [Range(minimum:1, maximum:999, ErrorMessage = "Prisen måste vara mellan 1 och 999")]
     public int Price { get; set; }
+
     [DataType(DataType.Date)]
     public DateTime Orderdate { get; set; }
+
     [Required]
     public string Category { get; set; }
     public string Shelf { get; set; }

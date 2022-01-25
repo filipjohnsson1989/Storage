@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Storage.Data;
 using Storage.Models;
+using Storage.Models.ViewModels;
 
 namespace Storage.Controllers
 {
@@ -149,6 +150,25 @@ namespace Storage.Controllers
         private bool ProductExists(int id)
         {
             return _context.Product.Any(e => e.Id == id);
+        }
+
+
+        public async Task<IActionResult> Inventory()
+        {
+            var producGroups = _context.Product.GroupBy(g => new { g.Name,g.Price })
+                .Select(g => new { g.Key, SUM = g.Sum(s => s.Count) });
+
+
+            return View(await _context.Product.Join(producGroups,
+                product => new { product.Name, product.Price },
+                producGroup => new { producGroup.Key.Name, producGroup.Key.Price },
+                (product, producGroup) => new ProductViewModel()
+                {
+                    Name = product.Name,
+                    Price = product.Price,
+                    Count = product.Count,
+                    InventoryValue = producGroup.SUM,
+                }).ToListAsync());
         }
     }
 }
